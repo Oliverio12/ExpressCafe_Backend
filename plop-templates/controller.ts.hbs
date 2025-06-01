@@ -1,0 +1,83 @@
+import { Request, Response } from 'express';
+import { {{camelCase name}}Repository } from '../repositories/{{camelCase name}}Repository';
+
+export const get{{name}} = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  try {
+    const items = await {{camelCase name}}Repository.findAll();
+    res.json(items);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error al obtener {{camelCase name}}' });
+  }
+};
+
+export const get{{name}}ById = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  try {
+    const id = Number(req.params.id);
+    const item = await {{camelCase name}}Repository.findById(id);
+    if (!item) {
+      res.status(404).json({ message: '{{name}} no encontrado' });
+      return;
+    }
+    res.json(item);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error al obtener {{camelCase name}}' });
+  }
+};
+
+export const create{{name}} = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  try {
+    const payload = req.body;
+    const newItem = await {{camelCase name}}Repository.create(payload);
+    res.status(201).json(newItem);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error al crear {{camelCase name}}' });
+  }
+};
+
+export const update{{name}} = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  try {
+    const id = Number(req.params.id);
+    const [count, rows] = await {{camelCase name}}Repository.update(id, req.body);
+    if (count === 0) {
+      res.status(404).json({ message: '{{name}} no encontrado' });
+      return;
+    }
+    res.json(rows[0]);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error al actualizar {{camelCase name}}' });
+  }
+};
+
+export const delete{{name}} = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  try {
+    const id = Number(req.params.id);
+    const deleted = await {{camelCase name}}Repository.delete(id);
+    if (deleted === 0) {
+      res.status(404).json({ message: '{{name}} no encontrado' });
+      return;
+    }
+    res.status(204).send();
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error al eliminar {{camelCase name}}' });
+  }
+};

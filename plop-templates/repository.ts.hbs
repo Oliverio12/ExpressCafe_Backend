@@ -1,0 +1,27 @@
+import {
+  {{camelCase name}},
+  {{camelCase name}}CreationAttributes
+} from '../models/{{camelCase name}}';
+
+export const {{camelCase name}}Repository = {
+  findAll: (): Promise<{{camelCase name}}[]> =>
+    {{camelCase name}}.findAll(),
+
+  findById: (id: number): Promise<{{camelCase name}} | null> =>
+    {{camelCase name}}.findByPk(id),
+
+  create: (data: {{camelCase name}}CreationAttributes): Promise<{{camelCase name}}> =>
+    {{camelCase name}}.create(data),
+
+  update: (
+    id: number,
+    data: Partial<{{camelCase name}}>
+  ): Promise<[number, {{camelCase name}}[]]> =>
+    {{camelCase name}}.update(data, {
+      where: { {{pk}}: id },
+      returning: true
+    }),
+
+  delete: (id: number): Promise<number> =>
+    {{camelCase name}}.destroy({ where: { {{pk}}: id } }),
+};

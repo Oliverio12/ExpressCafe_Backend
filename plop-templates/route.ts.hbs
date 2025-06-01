@@ -1,0 +1,18 @@
+import { Router } from 'express';
+import {
+  get{{name}},
+  get{{name}}ById,
+  create{{name}},
+  update{{name}},
+  delete{{name}}
+} from '../controllers/{{camelCase name}}Controller';
+
+const router = Router();
+
+router.get('/', get{{name}});
+router.get('/:id', get{{name}}ById);
+router.post('/', create{{name}});
+router.put('/:id', update{{name}});
+router.delete('/:id', delete{{name}});
+
+export default router;
